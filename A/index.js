@@ -1,5 +1,4 @@
-/*Nome: Gabriel de Freitas Garcia
-Objetivo: Fazer um programa em node.js que receba um arquivo input.csv, processe os dados e imprima em um arquivo outpu.json*/
+
 function main(){ //função principal
   var fs = require("fs"); //módulo com funções para arquivos
   var arquivo,linhas,aluno;
