@@ -1,10 +1,10 @@
-
-function main(){ //função principal
-  var fs = require("fs"); //módulo com funções para arquivos
+exports.parse = function(data){ //função principal
+  //módulo com funções para arquivos
   var arquivo,linhas,aluno;
   var alunos = [];
   var header = []; //variáveis usadas para guardar o arquivo, o arquivo separado em linhas, aluno provisoriamente, headers e a lista com os alunos
-  arquivo = fs.readFileSync("input.csv","utf-8"); //lê a entrada sincronamente, pra não dar problema com as operações em paralelo
+  console.log("cheguei")
+  arquivo = data; //Recebe os dados
   linhas = arquivo.split(/\r?\n/); //quebra cada linha da entrada numa lista
   header = separar(linhas[0]); //separa o header num formato aproveitável
   linhas.splice(0,1); //retira o header da lista
@@ -25,8 +25,7 @@ function main(){ //função principal
   } else if (alunos.length == 0){
     alunos = ""; //Se não houver nenhum, transforma em string vazia
   }
-  fs.writeFileSync("output.json",JSON.stringify(alunos,null,1),"utf-8"); //Escreve no arquivo de saída, sincronamente, achei melhor não lidar com assincro por enquanto
-  //console.log(JSON.stringify(alunos,null,4))
+  return alunos;
 }
 function separar(string){
   var aspas1 = /\".+/, aspas2 = /.+\"/; //Regex para expressões com aspas no começo e no final
@@ -220,5 +219,5 @@ function busca_endereço(lista,endereço){ //Busca sequencial de endereços, seq
 }
 
 
-main() //Chamada da função principal
+
 //Agradeço a Deus porque Ele sempre está comigo, morreu por mim, me salvou e cuidou de mim em cada momento de minha vida.
