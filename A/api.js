@@ -5,13 +5,11 @@ main = function(){
   var http = require('http') //Módulo HTTP
   var port = 5000; //Porta aleatória que escolhi
   var server = http.createServer(); //Cria o servidor
-
   server.on('request', function(req, res) { //ativa o servidor quando recebe um request
       var data = ''; //Dados vazios, por enquanto
       req.on('data', function(callback) { //Entra no objeto request e acessa os dados
           data += callback.toString(); //Vai recebendo os dados, transformando em string e concatenando
       });
-
       req.on('end', function() { //Realiza no final da requisição
           var json = parse.parse(data) //pega os dados e manda pra função que parseia
           json = JSON.stringify(json,null,1); //transforma isso em string
@@ -20,8 +18,8 @@ main = function(){
           res.end(); //Termina requisição
       });
   });
-
   server.listen(port); //Manda server ouvir evento de acesso à porta que escolhi
 }
+
 main() //chama função main
 //Agradeço a Deus por ter cuidado de mim por toda a minha vida e por estar me ajudando sempre, a cada instante.
