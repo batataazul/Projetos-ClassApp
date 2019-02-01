@@ -3,8 +3,7 @@ exports.parse = function(data){ //função principal
   var arquivo,linhas,aluno;
   var alunos = [];
   var header = []; //variáveis usadas para guardar o arquivo, o arquivo separado em linhas, aluno provisoriamente, headers e a lista com os alunos
-  console.log("cheguei")
-  arquivo = data; //Recebe os dados
+  arquivo = data; //Recebe os dados do programa principal
   linhas = arquivo.split(/\r?\n/); //quebra cada linha da entrada numa lista
   header = separar(linhas[0]); //separa o header num formato aproveitável
   linhas.splice(0,1); //retira o header da lista
@@ -25,7 +24,7 @@ exports.parse = function(data){ //função principal
   } else if (alunos.length == 0){
     alunos = ""; //Se não houver nenhum, transforma em string vazia
   }
-  return alunos;
+  return alunos; //Devolve objeto para o programa que chamou
 }
 function separar(string){
   var aspas1 = /\".+/, aspas2 = /.+\"/; //Regex para expressões com aspas no começo e no final
@@ -74,11 +73,12 @@ function cria_objeto(aluno,header){ //Função que transforma linha da entrada e
     if (aluno[i] === ""){
       continue;
     }
+    var busca_num = num.exec(aluno[i]); //Só realiza busca uma vez, mais eficiente
     if (name.test(header[i])){ //Se o elemento for o nome
       modelo.fullname = aluno[i]; //Salva o nome no objeto
     } else if (eid.test(header[i])){ //Se for um identificador
-      if(num.test(aluno[i])){ //Verifica se elemento é válido
-        modelo.eid = num.exec(aluno[i])[0]; //Se for, salva no objeto
+      if(busca_num){ //Verifica se elemento é válido
+        modelo.eid = busca_num[0]; //Se for, salva no objeto
       }
     } else if (classe.test(header[i])){ //Se elemento for uma sala
         modelo = adicionar(endereço,aluno[i],sala,modelo,1); //Chama função que adiciona ao objeto
@@ -130,13 +130,14 @@ function cria_objeto(aluno,header){ //Função que transforma linha da entrada e
 }
 function adicionar(endereço,aluno,regex,modelo,tipo){ //Função que adiciona as salas e o email, recebe o texto, a expressão regular necessária, o objeto, o objeto de endereço e o tipo, 1 para classe, 2 para email
   var cópia; //Variável pra evitar problema de referência
-  while (regex.test(aluno)){
+  encontra = regex.exec(aluno); //Só realiza busca uma vez, mais eficiente
+  while (encontra){
     cópia = {
       type: endereço.type,
       tags: endereço.tags,
       address: ""
     } //A cada iteração, recria o objeto, pra não dar problema de alterar o email dentro da lista quando troca o email do objeto temporário
-    var corresponde = regex.exec(aluno)[0]; //Pega o elemento que queremos
+    var corresponde = encontra[0]; //Pega o elemento que queremos
     if (tipo === 1){ //Se for classe
       if (!busca(corresponde,modelo.classes)){ //Verifica se essa classe já está na lista
         modelo.classes.push(corresponde); //Se não estiver, adiciona à lista
@@ -146,6 +147,7 @@ function adicionar(endereço,aluno,regex,modelo,tipo){ //Função que adiciona a
       modelo.addresses = funde(modelo.addresses,cópia); //Usa função funde para adicionar email
     }
     aluno = aluno.replace(corresponde,""); //Retira da String o email ou classe que já foi adicionado
+    encontra = regex.exec(aluno);
   }
   return modelo; //Retorna objeto
 }
