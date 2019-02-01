@@ -15,7 +15,7 @@ main = function(){
       req.on('end', function() { //Realiza no final da requisição
           var json = parse.parse(data) //pega os dados e manda pra função que parseia
           json = JSON.stringify(json,null,1); //transforma isso em string
-          res.writeHead(200, {'Content-Type': 'json'}); //Cria cabeçário html
+          res.writeHead(200, {'Content-Type': 'json'}); //Cria cabeçário que diz que o conteúdo é JSON
           res.write(json) //Devolve pra quem requisitou
           res.end(); //Termina requisição
       });
