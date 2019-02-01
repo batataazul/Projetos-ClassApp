@@ -1,7 +1,7 @@
 /*Nome: Gabriel de Freitas Garcia
 Objetivo: Fazer um programa em node.js que receba uma tabela csv processe os dados e devolva um JSON à requisição*/
 main = function(){
-  var parse = require('./parse') //Módulo que eu criei que parseia os dados e transforma em JSON
+  var parse = require('./parse') //Módulo que eu criei que parseia os dados e transforma em JSON. MUITO IMPORTANTE!!!!! OS DOIS ARQUIVOS, api.js e parse.js, PRECISAM ESTAR NA MESMA PASTA PARA FUNCIONAR!!!!
   var http = require('http') //Módulo HTTP
   var port = 5000; //Porta aleatória que escolhi
   var server = http.createServer(); //Cria o servidor
