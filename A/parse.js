@@ -1,3 +1,5 @@
+//Nome: Gabriel de Freitas
+//Objetivo: Módulo auxiliar para a API desenvolvida para o projeto ClasApp A, utilizando o código de parseamento de dados do ClassApp Challenge
 exports.parse = function(data){ //função principal
   //módulo com funções para arquivos
   var arquivo,linhas,aluno;
